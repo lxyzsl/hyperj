@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.6</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.hyperj</groupId>
+    <artifactId>hyperj</artifactId>
+    <version>0.0.1</version>
+
+    <name>hyperj</name>
+    <description>hyperj框架</description>
+
+    <!--  标记此pom为父pom  -->
+    <packaging>pom</packaging>
+    <!--  引入子模块  -->
+    <modules>
+        <module>hyperj-common</module>
+        <module>hyperj-framework</module>
+        <module>hyperj-system</module>
+        <module>hyperj-app</module>
+    </modules>
+
+
+    <properties>
+        <hyperj.version>0.0.1</hyperj.version>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <swagger.version>3.0.0</swagger.version>
+        <hutool-all.version>5.4.0</hutool-all.version>
+        <java-jwt.version>3.10.3</java-jwt.version>
+        <shiro.version>1.8.0</shiro.version>
+        <mybatis-spring-boot.version>2.2.0</mybatis-spring-boot.version>
+        <druid.version>1.2.8</druid.version>
+        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
+        <lombok.version>1.18.20</lombok.version>
+    </properties>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot的依赖配置-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.5.6</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- 通用工具-->
+            <dependency>
+                <groupId>com.hyperj</groupId>
+                <artifactId>hyperj-common</artifactId>
+                <version>${hyperj.version}</version>
+            </dependency>
+
+            <!-- 核心模块-->
+            <dependency>
+                <groupId>com.hyperj</groupId>
+                <artifactId>hyperj-framework</artifactId>
+                <version>${hyperj.version}</version>
+            </dependency>
+
+            <!-- 系统模块-->
+            <dependency>
+                <groupId>com.hyperj</groupId>
+                <artifactId>hyperj-system</artifactId>
+                <version>${hyperj.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
+    <dependencies>
+        <!-- Swagger3依赖 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${swagger.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mapstruct</artifactId>
+                    <groupId>org.mapstruct</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- jwt依赖 -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java-jwt.version}</version>
+        </dependency>
+
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- Shiro核心框架 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <!-- SpringBoot集成mybatis框架 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot.version}</version>
+        </dependency>
+
+        <!-- 阿里数据库连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <!--Bean映射工具mapstruct-->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+
+</project>

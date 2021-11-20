@@ -1,0 +1,85 @@
+# 项目相关配置
+hyperj:
+  # 名称
+  name: Hyperj
+  # 版本
+  version: 0.0.1
+  # 描述
+  description: "牛批哄哄的框架"
+
+
+
+# 开发环境配置
+server:
+  # 服务器的HTTP端口，默认为8080
+  port: 9090
+  servlet:
+    # 应用的访问路径
+    context-path: /
+  tomcat:
+    # tomcat的URI编码
+    uri-encoding: UTF-8
+    # tomcat最大线程数，默认为200
+    max-threads: 800
+    # Tomcat启动初始化的线程数，默认值25
+    min-spare-threads: 30
+
+# Spring配置
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # 日期返回格式
+    time-zone: GMT+8  #时区
+    serialization:
+      write-dates-as-timestamps: false  # 关闭输出日期为时间戳项
+  profiles:
+    active: druid
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: hyperj-app/src/main/java #设置重启的目录
+    livereload:
+      port: 35730
+  main:
+    allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
+  redis:
+    database: 7
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 3000
+    jedis:
+      pool:                         # redis数据源连接池
+        max-active: 1000            # 最大连接上限1000个
+        max-wait: -1ms              # 最大等待毫秒数, 单位为 ms, 超过时间会出错误信息
+        min-idle: 8                 # 最小的空闲连接数
+        max-idle: 16                # 最大的空闲连接数
+
+#MyBatis配置
+mybatis:
+  # 加载全局的配置文件
+  config-location: classpath:mybatis/mybatis-config.xml               # 支持下
+  type-aliases-package: com.hyperj.**.dao                # 指定映射文件类路径
+  mapper-locations: classpath*:mapper/**/*.xml               # 指定MyBatis的mapper.xml文件的位置
+
+
+# Swagger配置
+swagger:
+  # 是否开启swagger
+  enabled: true
+
+# 防止XSS攻击
+xss:
+  # 过滤开关
+  enabled: true
+  # 排除链接（多个用逗号分隔）
+  excludes: /system/notice
+  # 匹配链接
+  urlPatterns: /*
+
+
+jwt:
+  header: Authorization # 令牌自定义标识
+  secret: abc123456   # 秘钥
+  expire: 5           # 过期时间（天）
+  cache-expire: 10    # 令牌缓存天数
+

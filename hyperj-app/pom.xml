@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.hyperj</groupId>
+        <artifactId>hyperj</artifactId>
+        <version>0.0.1</version>
+    </parent>
+    <artifactId>hyperj-app</artifactId>
+    <version>0.0.1</version>
+    <name>hyperj-app</name>
+    <description>hyperj 应用</description>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional> <!-- 表示依赖不会传递,不能被其它模块继承，如果多个子模块可以去掉  不必须 -->
+            <scope>runtime</scope>     <!-- 只在运行时起作用  打包时不打进去 -->
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.hyperj</groupId>
+            <artifactId>hyperj-system</artifactId>
+        </dependency>
+
+        <!-- Mysql驱动包 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.1.RELEASE</version>
+                <configuration>
+                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <warName>${project.artifactId}</warName>
+                </configuration>
+            </plugin>
+        </plugins>
+        <finalName>${project.artifactId}</finalName>
+    </build>
+
+</project>
