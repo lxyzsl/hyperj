@@ -13,17 +13,17 @@ public enum HttpStatusEnum implements BaseExceptionInterface {
     SERVER_BUSY(503,"服务器正忙，请稍后再试!")
     ;
 
-    private Number resultCode;
+    private Integer resultCode;
 
     private String resultMsg;
 
-    HttpStatusEnum(Number resultCode, String resultMsg) {
+    HttpStatusEnum(Integer resultCode, String resultMsg) {
         this.resultCode = resultCode;
         this.resultMsg = resultMsg;
     }
 
     @Override
-    public Number getResultCode() {
+    public Integer getResultCode() {
         return  this.resultCode;
     }
 

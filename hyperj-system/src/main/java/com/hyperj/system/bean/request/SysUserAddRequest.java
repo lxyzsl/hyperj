@@ -1,6 +1,6 @@
 package com.hyperj.system.bean.request;
 
-import com.hyperj.framework.web.db.BasePojo;
+import com.hyperj.common.annotation.Phone;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -46,7 +46,8 @@ public class SysUserAddRequest implements Serializable {
     /**
      * 手机号码
      */
-    @Size(min = 0, max = 11, message = "手机号码长度不能超过11个字符")
+    @NotBlank(message = "手机号不能为空")
+    @Phone
     private String mobile;
 
     /**
@@ -66,10 +67,14 @@ public class SysUserAddRequest implements Serializable {
     @NotBlank(message = "密码不能为空")
     private String password;
 
+
     /**
      * 备注
      */
     @ApiModelProperty(hidden=true)
     private String remark;
+
+
+
 
 }

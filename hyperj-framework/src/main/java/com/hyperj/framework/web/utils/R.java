@@ -16,6 +16,8 @@ public class R extends HashMap<String,Object> {
      */
     public static final String CODE = "code";
 
+    private static final String SUCCESS = "success";
+
     /**
      * 响应消息
      */
@@ -29,6 +31,7 @@ public class R extends HashMap<String,Object> {
 
     public R(Number code,String msg,Object data){
         super.put(CODE, code);
+        super.put(SUCCESS, code.equals(HttpStatusEnum.SUCCESS.getResultCode()));
         super.put(MSG, msg);
         if(null != data){
             super.put(Data, data);
@@ -37,6 +40,7 @@ public class R extends HashMap<String,Object> {
 
     public R(BaseExceptionInterface exception,Object data){
         super.put(CODE, exception.getResultCode());
+        super.put(SUCCESS,false);
         super.put(MSG,exception.getResultMsg());
         if(null != data){
             super.put(Data, data);

@@ -17,24 +17,24 @@ class HyperjAppApplicationTests {
     @Test
     public void testLoginLogout(){
         // 得到shiro.ini文件
-        DefaultSecurityManager securityManager = new DefaultSecurityManager();
-        IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
-        securityManager.setRealm(iniRealm);
-        // 绑定securityManager
-        SecurityUtils.setSecurityManager(securityManager);
-        // 获取用户
-        Subject currentUser = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken("zhangsan","1111");
-        try {
-            currentUser.login(token);
-            System.out.println("登陆成功");
-        }catch (UnknownAccountException uae){
-            System.out.println("未知账号");
-        }catch (IncorrectCredentialsException ice){
-            System.out.println("密码错误");
-        }catch (Exception e){
-            System.out.println("未知错误");
-        }
+//        DefaultSecurityManager securityManager = new DefaultSecurityManager();
+//        IniRealm iniRealm = new IniRealm("classpath:shiro.ini");
+//        securityManager.setRealm(iniRealm);
+//        // 绑定securityManager
+//        SecurityUtils.setSecurityManager(securityManager);
+//        // 获取用户
+//        Subject currentUser = SecurityUtils.getSubject();
+//        UsernamePasswordToken token = new UsernamePasswordToken("zhangsan","1111");
+//        try {
+//            currentUser.login(token);
+//            System.out.println("登陆成功");
+//        }catch (UnknownAccountException uae){
+//            System.out.println("未知账号");
+//        }catch (IncorrectCredentialsException ice){
+//            System.out.println("密码错误");
+//        }catch (Exception e){
+//            System.out.println("未知错误");
+//        }
     }
 
 }

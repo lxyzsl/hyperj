@@ -55,9 +55,8 @@
         </if>
     </select>
 
-    <insert id="insertUser" parameterType="com.hyperj.system.bean.request.SysUserAddRequest" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="insertUser" parameterType="com.hyperj.system.bean.po.SysUserPo" useGeneratedKeys="true" keyProperty="userId">
         insert into sys_user(
-        <if test="userId != null and userId != 0">user_id,</if>
         <if test="deptId != null and deptId != 0">dept_id,</if>
         <if test="nickName != null and nickName != ''">nick_name,</if>
         <if test="userName != null and userName != ''">user_name,</if>
@@ -73,9 +72,8 @@
         <if test="remark != null and remark != ''">remark,</if>
         create_time
         )values(
-        <if test="userId != null and userId != ''">#{userId},</if>
         <if test="deptId != null and deptId != ''">#{deptId},</if>
-        <if test="nickname != null and nickname != ''">#{nickname},</if>
+        <if test="nickName != null and nickName != ''">#{nickName},</if>
         <if test="userName != null and userName != ''">#{userName},</if>
         <if test="email != null and email != ''">#{email},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>

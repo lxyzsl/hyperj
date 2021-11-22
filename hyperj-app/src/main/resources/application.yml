@@ -61,6 +61,12 @@ mybatis:
   type-aliases-package: com.hyperj.**.dao                # 指定映射文件类路径
   mapper-locations: classpath*:mapper/**/*.xml               # 指定MyBatis的mapper.xml文件的位置
 
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true  # 分页参数合理化。当启用合理化时，如果pageNum>pageSize,默认会查询最后一页的数据。禁用合理化后，当pageNum>pageSize会返回空数据
+  supportMethodsArguments: true
+  params: count=countSql
 
 # Swagger配置
 swagger:
