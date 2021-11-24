@@ -3,6 +3,7 @@ package com.hyperj.system.service;
 import com.hyperj.framework.web.utils.R;
 import com.hyperj.system.bean.po.SysUserPo;
 import com.hyperj.system.bean.request.SysUserAddRequest;
+import com.hyperj.system.bean.request.SysUserEditRequest;
 import com.hyperj.system.bean.request.SysUserListRequest;
 import com.hyperj.system.bean.vo.SysUserVo;
 
@@ -22,7 +23,7 @@ public interface ISysUserService {
      * @param sysUserAddRequest
      * @return
      */
-    R insertUser(SysUserAddRequest sysUserAddRequest);
+    int insertUser(SysUserAddRequest sysUserAddRequest);
 
 
     /**
@@ -52,4 +53,25 @@ public interface ISysUserService {
      * @return
      */
      int checkEmailUnique(String email);
+
+
+    /**
+     * 获取用户信息
+     */
+    SysUserPo getUserInfo(Long userId);
+
+    /**
+     * 修改用户信息
+     */
+    int updateUser(Long userId,SysUserEditRequest sysUserEditRequest);
+
+    /**
+     * 删除用户（假删除）
+     */
+    void deleteUser(Long userId);
+
+    /**
+     * 设置账号状态
+     */
+    void setStatus(Long userId,String status);
 }

@@ -5,7 +5,7 @@ import com.hyperj.common.exception.BaseExceptionInterface;
 public enum HttpStatusEnum implements BaseExceptionInterface {
 
     SUCCESS(200,"操作成功"),
-    BODY_NOT_MATCH(400,"请求数据格式不服"),
+    BODY_NOT_MATCH(400,"请求数据格式不符"),
     SC_UNAUTHORIZED(401,"无效的令牌!"),
     NOT_FOUND(404, "未找到该资源!"),
     NOT_ALLOW(405,"请求方式不支持!"),

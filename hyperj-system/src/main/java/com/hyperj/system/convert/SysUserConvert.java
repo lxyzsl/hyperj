@@ -2,6 +2,7 @@ package com.hyperj.system.convert;
 
 import com.hyperj.system.bean.po.SysUserPo;
 import com.hyperj.system.bean.request.SysUserAddRequest;
+import com.hyperj.system.bean.request.SysUserEditRequest;
 import com.hyperj.system.bean.vo.SysUserVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -28,4 +29,9 @@ public interface SysUserConvert {
      * sysUserAddRequest -> sysUserPo
      */
     SysUserPo sysUserRequestToPo(SysUserAddRequest sysUserAddRequest);
+
+    /**
+     * sysUserEditRequest -> sysUserPo
+     */
+    SysUserPo sysUserEditRequestToPo(SysUserEditRequest sysUserEditRequest);
 }

@@ -1,6 +1,8 @@
 package com.hyperj.framework.exception;
 
+import cn.hutool.core.lang.Validator;
 import com.hyperj.common.enums.HttpStatusEnum;
+import com.hyperj.common.exception.CustomException;
 import com.hyperj.common.exception.GlobalException;
 import com.hyperj.framework.web.utils.R;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,21 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+
+    /**
+     * 业务异常
+     */
+    @ExceptionHandler(CustomException.class)
+    public R handleException(CustomException e)
+    {
+        log.warn("业务异常:", e);
+        if (Validator.isNull(e.getCode()))
+        {
+            return R.error(e.getMessage());
+        }
+        return R.error(e.getCode(), e.getMessage());
+    }
 
     /**
      * 系统异常

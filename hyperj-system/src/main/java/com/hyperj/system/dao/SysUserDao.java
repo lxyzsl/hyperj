@@ -54,4 +54,26 @@ public interface SysUserDao {
     @Select("select count(1) from sys_user where email=#{email} limit 1")
     int checkEmailUnique(String email);
 
+    /**
+     * 获取用户信息
+     */
+    SysUserPo getUserInfo(Long userId);
+
+    /**
+     * 修改用户信息
+     */
+    int updateUser(SysUserPo sysUserPo);
+
+
+    /**
+     * 删除用户（假删除）
+     */
+    @Select("update sys_user set removed = 1 where user_id = #{userId}")
+    void deleteUser(Long userId);
+
+    /**
+     * 设置账号状态
+     */
+    @Select("update sys_user set status = #{status} where user_id = #{userId}")
+    void setStatus(Long userId,String status);
 }

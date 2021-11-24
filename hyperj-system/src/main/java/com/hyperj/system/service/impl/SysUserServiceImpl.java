@@ -1,8 +1,11 @@
 package com.hyperj.system.service.impl;
 
+import com.hyperj.common.exception.CustomException;
+import com.hyperj.common.exception.GlobalException;
 import com.hyperj.common.utils.ShiroUtils;
 import com.hyperj.framework.web.utils.R;
 import com.hyperj.system.bean.request.SysUserAddRequest;
+import com.hyperj.system.bean.request.SysUserEditRequest;
 import com.hyperj.system.convert.SysUserConvert;
 import com.hyperj.system.bean.request.SysUserListRequest;
 import com.hyperj.system.dao.SysUserDao;
@@ -41,18 +44,18 @@ public class SysUserServiceImpl implements ISysUserService {
      * @return
      */
     @Override
-    public R insertUser(SysUserAddRequest sysUserAddRequest) {
+    public int insertUser(SysUserAddRequest sysUserAddRequest) {
         if(this.checkUserNameUnique(sysUserAddRequest.getUserName())>=1){
-            return R.error("账号已存在");
+            throw new CustomException("账号已存在");
         }
         if(this.checkMobileUnique(sysUserAddRequest.getMobile())>=1){
-            return R.error("手机号已存在");
+            throw new CustomException("手机号已存在");
         }
         if(sysUserAddRequest.getNickName() != null && (this.checkNickNameUnique(sysUserAddRequest.getNickName())>=1)){
-            return R.error("昵称已存在");
+            throw new CustomException("昵称已存在");
         }
         if(sysUserAddRequest.getEmail() != null && (this.checkEmailUnique(sysUserAddRequest.getEmail())>=1)){
-            return R.error("游戏已存在");
+            throw new CustomException("邮箱已存在");
         }
 
         String salt = ShiroUtils.randomSalt();
@@ -68,11 +71,7 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUserPo.setSalt(salt);
         //TODO:通过shiro获取当前登录用户的userName并写入到sysUserAddRequest中
 
-        int result = sysUserDao.insertUser(sysUserPo);
-        if(result > 0){
-            return R.success("添加成功");
-        }
-        return R.success("添加失败");
+        return sysUserDao.insertUser(sysUserPo);
     }
 
 
@@ -116,5 +115,67 @@ public class SysUserServiceImpl implements ISysUserService {
         return sysUserDao.checkEmailUnique(email);
     }
 
+
+    /**
+     * 获取用户信息
+     */
+    @Override
+    public SysUserPo getUserInfo(Long userId){
+        return sysUserDao.getUserInfo(userId);
+    }
+
+    /**
+     * 修改用户信息
+     */
+    @Override
+    public int updateUser(Long userId,SysUserEditRequest sysUserEditRequest) {
+
+
+        SysUserPo sysUserPo = this.getUserInfo(userId);
+
+        if(sysUserPo.getUserId() == null){
+            throw new CustomException("该用户不存在");
+        }
+//
+//        if(this.checkMobileUnique(sysUserEditRequest.getMobile())>=1){
+//            throw new CustomException("手机号已存在");
+//        }
+//        if(sysUserEditRequest.getNickName() != null && (this.checkNickNameUnique(sysUserEditRequest.getNickName())>=1)){
+//            throw new CustomException("昵称已存在");
+//
+//        }
+//        if(sysUserEditRequest.getEmail() != null && (this.checkEmailUnique(sysUserEditRequest.getEmail())>=1)){
+//            throw new CustomException("邮箱已存在");
+//
+//        }
+        SysUserPo sysUserEdit = sysUserConvert.sysUserEditRequestToPo(sysUserEditRequest);
+        if(sysUserEdit.getPassword() != null){
+            String salt = ShiroUtils.randomSalt();
+            sysUserEdit.setPassword(
+                    ShiroUtils.encryptPassword(
+                            sysUserPo.getUserName(),sysUserEdit.getPassword(),salt
+                    )
+            );
+            sysUserEdit.setSalt(salt);
+        }
+        sysUserEdit.setUserId(userId);
+        return sysUserDao.updateUser(sysUserEdit);
+    }
+
+    /**
+     * 删除用户（假删除）
+     */
+    @Override
+    public void deleteUser(Long userId) {
+         sysUserDao.deleteUser(userId);
+    }
+
+    /**
+     * 设置账号状态
+     */
+    @Override
+    public void setStatus(Long userId, String status) {
+        sysUserDao.setStatus(userId,status);
+    }
 
 }
