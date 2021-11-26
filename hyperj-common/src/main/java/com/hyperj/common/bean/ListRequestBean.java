@@ -1,4 +1,4 @@
-package com.hyperj.framework.web.bean;
+package com.hyperj.common.bean;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

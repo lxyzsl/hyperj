@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hyperj</groupId>
-            <artifactId>hyperj-framework</artifactId>
+            <artifactId>hyperj-common</artifactId>
         </dependency>
 
 

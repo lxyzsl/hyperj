@@ -1,6 +1,6 @@
 package com.hyperj.system.bean.request;
 
-import com.hyperj.framework.web.bean.ListRequestBean;
+import com.hyperj.common.bean.ListRequestBean;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

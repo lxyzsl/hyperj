@@ -17,7 +17,7 @@
         <!-- 公共模块-->
         <dependency>
             <groupId>com.hyperj</groupId>
-            <artifactId>hyperj-common</artifactId>
+            <artifactId>hyperj-system</artifactId>
         </dependency>
 
 

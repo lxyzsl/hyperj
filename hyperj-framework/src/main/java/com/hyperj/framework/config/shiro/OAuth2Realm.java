@@ -52,10 +52,13 @@ public class OAuth2Realm extends AuthorizingRealm {
         String accessToken = (String) authenticationToken.getPrincipal();
         // 从令牌中获取userId
         long userId = jwtUtil.getUserId(accessToken);
-        //  检测该账户是否被冻结
+        //  检测该账户状态
         SysUserPo user = sysUserService.getUserInfo(userId);
-        if(null == user){
+        if(user.getStatus().equals("0")){
             throw new LockedAccountException("账号已被锁定，请联系管理员");
+        }
+        if(user.getRemoved().equals("1")){
+            throw new LockedAccountException("账号已被删除，请联系管理员");
         }
         // 往info对象中添加用户信息，token，当前Realm类的名字
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,accessToken,getName());
