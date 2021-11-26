@@ -23,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/system/user")
-@Api("系统用户接口")
+@Api(tags="系统用户接口")
 public class SysUserController extends BaseController {
 
     @Autowired

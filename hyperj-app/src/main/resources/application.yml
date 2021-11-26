@@ -89,3 +89,9 @@ jwt:
   expire: 5           # 过期时间（天）
   cache-expire: 10    # 令牌缓存天数
 
+counter:
+  dataCenterId: 0 # 数据中心ID(0~31)
+  workerId: 0 # 工作机器ID(0~31)
+
+cacheExpire:    # redis缓存有效期（秒）
+  captcha: 36000 # 验证码有效期

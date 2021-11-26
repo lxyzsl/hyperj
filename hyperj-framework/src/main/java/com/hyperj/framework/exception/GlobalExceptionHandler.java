@@ -81,6 +81,7 @@ public class GlobalExceptionHandler {
         return R.error(HttpStatusEnum.NOT_ALLOW);
     }
 
+
     /**
      * 拦截未知的运行时异常
      */

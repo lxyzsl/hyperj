@@ -1,8 +1,9 @@
 package com.hyperj.system.bean.request;
 
-import com.hyperj.framework.web.db.BasePojo;
+import com.hyperj.framework.web.bean.ListRequestBean;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 
 
 /**
@@ -10,7 +11,7 @@ import lombok.Data;
  * @author
  */
 @Data
-public class SysUserListRequest extends BasePojo {
+public class SysUserListRequest extends ListRequestBean {
 
     /**
      * 用户账号
@@ -32,6 +33,20 @@ public class SysUserListRequest extends BasePojo {
      */
     @ApiModelProperty(value="帐号状态（1正常 0停用）",name="status",allowableValues="0,1")
     private String status;
+
+
+
+    /**
+     * 登录时间范围
+     */
+    @ApiModelProperty(value="登录时间(end)")
+    private String loginEndTime;
+
+    /**
+     * 登录时间范围
+     */
+    @ApiModelProperty(value="登录时间(start)")
+    private String loginStartTime;
 
 
     private static final long serialVersionUID = 1L;

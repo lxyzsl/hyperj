@@ -1,16 +1,13 @@
 package com.hyperj.system.service.impl;
 
 import com.hyperj.common.exception.CustomException;
-import com.hyperj.common.exception.GlobalException;
 import com.hyperj.common.utils.ShiroUtils;
-import com.hyperj.framework.web.utils.R;
 import com.hyperj.system.bean.request.SysUserAddRequest;
 import com.hyperj.system.bean.request.SysUserEditRequest;
 import com.hyperj.system.convert.SysUserConvert;
 import com.hyperj.system.bean.request.SysUserListRequest;
 import com.hyperj.system.dao.SysUserDao;
 import com.hyperj.system.bean.po.SysUserPo;
-import com.hyperj.system.bean.vo.SysUserVo;
 import com.hyperj.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -177,5 +174,14 @@ public class SysUserServiceImpl implements ISysUserService {
     public void setStatus(Long userId, String status) {
         sysUserDao.setStatus(userId,status);
     }
+
+    /**
+     * 根据用户名获取用户信息
+     */
+    @Override
+    public SysUserPo getUserByUserName(String userName) {
+        return sysUserDao.getUserByUserName(userName);
+    }
+
 
 }

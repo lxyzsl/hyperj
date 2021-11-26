@@ -59,6 +59,8 @@ public interface SysUserDao {
      */
     SysUserPo getUserInfo(Long userId);
 
+    SysUserPo getUserByUserName(String username);
+
     /**
      * 修改用户信息
      */

@@ -35,6 +35,7 @@ public class TokenAspect {
         // 如果ThreadLocal中存在Token，说明是更新的Token
         if(token != null){
             r.put(header,token); // 在响应中放置Token
+            // 用完后要及时清除，避免内存泄漏
             threadLocalToken.clear();
         }
         return r;

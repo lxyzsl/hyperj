@@ -1,6 +1,7 @@
 package com.hyperj.app;
 
 
+import com.hyperj.common.utils.ShiroUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -35,6 +36,7 @@ class HyperjAppApplicationTests {
 //        }catch (Exception e){
 //            System.out.println("未知错误");
 //        }
+
     }
 
 }

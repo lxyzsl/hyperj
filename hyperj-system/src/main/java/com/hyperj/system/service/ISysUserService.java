@@ -1,11 +1,9 @@
 package com.hyperj.system.service;
 
-import com.hyperj.framework.web.utils.R;
 import com.hyperj.system.bean.po.SysUserPo;
 import com.hyperj.system.bean.request.SysUserAddRequest;
 import com.hyperj.system.bean.request.SysUserEditRequest;
 import com.hyperj.system.bean.request.SysUserListRequest;
-import com.hyperj.system.bean.vo.SysUserVo;
 
 import java.util.List;
 
@@ -74,4 +72,9 @@ public interface ISysUserService {
      * 设置账号状态
      */
     void setStatus(Long userId,String status);
+
+    /**
+     * 根据用户名获取用户信息
+     */
+    SysUserPo getUserByUserName(String userName);
 }

@@ -47,11 +47,11 @@
         <if test="mobile != null and mobile != ''">
             AND mobile like concat('%', #{mobile}, '%')
         </if>
-        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-            AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        <if test="loginStartTime != null and loginStartTime != ''"><!-- 开始时间检索 -->
+            AND date_format(login_date,'%y%m%d') &gt;= date_format(#{loginStartTime},'%y%m%d')
         </if>
-        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-            AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        <if test="loginEndTime != null and loginEndTime != ''"><!-- 结束时间检索 -->
+            AND date_format(login_date,'%y%m%d') &lt;= date_format(#{loginEndTime},'%y%m%d')
         </if>
     </select>
 
@@ -96,7 +96,13 @@
     <select id="getUserInfo" parameterType="Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from sys_user where  removed = '0' and user_id = #{userId}
+        from sys_user where  user_id = #{userId}
+    </select>
+
+    <select id="getUserByUserName" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where  user_name = #{userName}
     </select>
 
     <update id="updateUser" parameterType="com.hyperj.system.bean.po.SysUserPo">

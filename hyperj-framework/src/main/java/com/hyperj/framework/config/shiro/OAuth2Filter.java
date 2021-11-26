@@ -3,6 +3,7 @@ package com.hyperj.framework.config.shiro;
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.hyperj.common.enums.HttpStatusEnum;
+import com.hyperj.common.utils.redis.RedisStringCache;
 import com.hyperj.framework.web.utils.JwtUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -41,7 +42,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisStringCache redisStringCache;
 
     /**
      * 获取请求头中携带的Token字符串
@@ -51,6 +52,11 @@ public class OAuth2Filter extends AuthenticatingFilter {
         // 如果请求头中没有token，那就尝试从请求体里获取
         if(!StrUtil.isNotBlank(token)){
             token = request.getParameter(header);
+        }
+        // 如果是Bearer 则需要截取
+        if(!StrUtil.isBlank(token) && header.equals("Authorization")){
+           String[] tokenArr = StrUtil.split(token," ");
+           return tokenArr[1];
         }
         return token;
     }
@@ -62,7 +68,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         // 获取请求Token
         String token = getRequestToken((HttpServletRequest) servletRequest);
-        if(!StrUtil.isBlank(token)){
+        if(StrUtil.isBlank(token)){
             return null;
         }
         return new OAuth2Token(token);
@@ -98,7 +104,6 @@ public class OAuth2Filter extends AuthenticatingFilter {
         threadLocalToken.clear();
 
         String token = getRequestToken(req);
-
         // 如果Token为空
         if(StrUtil.isBlank(token)){
             // 设置响应码
@@ -113,13 +118,13 @@ public class OAuth2Filter extends AuthenticatingFilter {
         }catch(TokenExpiredException e){
             // token过期
             // 查看redis缓存中是否有这个Token，如果有则刷新token，没有则返回false
-            if(redisTemplate.hasKey(token)){
-                redisTemplate.delete(token);
+            if(redisStringCache.hasKey(token)){
+                redisStringCache.delete(token);
                 // 从老的token中获取userId用来生成新token
-                int userId = jwtUtil.getUserId(token);
+                long userId = jwtUtil.getUserId(token);
                 token = jwtUtil.createToken(userId);
                 // 新token存入redis
-                redisTemplate.opsForValue().set(token,userId+"",cacheExpire, TimeUnit.DAYS);
+                RedisStringCache.setCacheObject(token,userId,cacheExpire, TimeUnit.DAYS);
                 // 将token存入媒介类
                 threadLocalToken.setToken(token);
             }else{

@@ -24,7 +24,7 @@ public class JwtUtil {
     /**
      * 创建token
      */
-    public String createToken(int userId){
+    public String createToken(long userId){
         // 计算令牌有效期，即当前日期+expire的日期
         Date date =  DateUtil.offset(new Date(), DateField.DAY_OF_YEAR,expire);
 
@@ -37,10 +37,10 @@ public class JwtUtil {
     }
 
     // 从token中获取userId
-    public int getUserId(String token){
+    public long getUserId(String token){
         // 解码jwt
         DecodedJWT jwt =  JWT.decode(token);
-        int userId = jwt.getClaim("userId").asInt();
+        long userId = jwt.getClaim("userId").asInt();
         return userId ;
     }
 
