@@ -114,6 +114,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return object == null;
     }
 
+    /**
+     * * 判断一个对象是否非空
+     *
+     * @param object Object
+     * @return true：非空 false：空
+     */
+    public static boolean isNotNull(Object object)
+    {
+        return !isNull(object);
+    }
+
 
     /**
      * 查找指定字符串是否匹配指定字符串列表中的任意一个字符串

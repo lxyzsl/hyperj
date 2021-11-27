@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class SysUserController extends BaseController {
     private SysUserConvert sysUserConvert;
 
     @GetMapping("/list")
+    @RequiresPermissions("system:user:list")
     @ResponseBody
     @ApiOperation("获取系统用户列表")
     public TableDataInfo<SysUserVo> list(SysUserListRequest sysUserListRequest){

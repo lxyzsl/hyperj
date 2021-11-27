@@ -1,8 +1,10 @@
 package com.hyperj.framework.config.shiro;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.druid.support.json.JSONUtils;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.hyperj.common.enums.HttpStatusEnum;
+import com.hyperj.common.exception.CustomException;
 import com.hyperj.common.utils.redis.RedisStringCache;
 import com.hyperj.framework.web.utils.JwtUtil;
 import org.apache.shiro.authc.AuthenticationException;
@@ -22,6 +24,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -159,12 +162,13 @@ public class OAuth2Filter extends AuthenticatingFilter {
         resp.setHeader("Access-Control-Allow-Origin",req.getHeader("Origin"));
 
         resp.setStatus((Integer) HttpStatusEnum.SC_UNAUTHORIZED.getResultCode());
+        HashMap<String, String> result = new HashMap<>();
+        result.put("msg",e.getMessage());
         try {
-            resp.getWriter().print(e.getMessage());
+            resp.getWriter().print(JSONUtils.toJSONString(result));
         }catch (Exception exception){
             // 不处理
         }
-
         // 因为是登录失败才会执行到这个方法，所以一定返回false
         return false;
     }

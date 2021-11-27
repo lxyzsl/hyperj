@@ -1,17 +1,19 @@
 package com.hyperj.system.bean.po;
 
-import java.io.Serializable;
 import java.util.Date;
 
+import com.hyperj.common.bean.BasePoBean;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
  * sys_user
  * @author
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class SysUserPo implements Serializable {
+public class SysUserPo extends BasePoBean {
     /**
      * 用户ID
      */
@@ -82,31 +84,6 @@ public class SysUserPo implements Serializable {
      * 最后登录时间
      */
     private Date loginDate;
-
-    /**
-     * 创建者
-     */
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新者
-     */
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    /**
-     * 备注
-     */
-    private String remark;
 
     /**
      * 是否是超级管理员

@@ -3,13 +3,14 @@ package com.hyperj.system.bean.request;
 import com.hyperj.common.bean.ListRequestBean;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+import lombok.EqualsAndHashCode;
 
 
 /**
  * sys_user
  * @author
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class SysUserListRequest extends ListRequestBean {
 

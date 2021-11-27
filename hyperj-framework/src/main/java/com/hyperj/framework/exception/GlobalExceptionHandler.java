@@ -6,12 +6,17 @@ import com.hyperj.common.exception.CustomException;
 import com.hyperj.common.exception.GlobalException;
 import com.hyperj.framework.web.utils.R;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,6 +76,17 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 权限校验异常
+     */
+    @ExceptionHandler(AuthorizationException.class)
+    public Object handleAuthorizationException(AuthorizationException e, HttpServletRequest request)
+    {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址'{}',权限校验失败'{}'", requestURI, e.getMessage());
+        return R.error("没有权限");
+    }
+
+    /**
      * 请求方式不支持
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -104,6 +120,8 @@ public class GlobalExceptionHandler {
         log.error("参数校验绑定异常：{}，详细信息：{}",message,e.getMessage());
         return R.error(message);
     }
+
+
 
     /**
      * 自定义验证异常

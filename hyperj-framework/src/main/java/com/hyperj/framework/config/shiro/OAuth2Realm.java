@@ -2,7 +2,11 @@ package com.hyperj.framework.config.shiro;
 
 import com.hyperj.framework.web.utils.JwtUtil;
 import com.hyperj.system.bean.po.SysUserPo;
+import com.hyperj.system.convert.SysUserConvert;
+import com.hyperj.system.service.ISysMenuService;
+import com.hyperj.system.service.ISysRoleService;
 import com.hyperj.system.service.ISysUserService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -10,6 +14,9 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class OAuth2Realm extends AuthorizingRealm {
@@ -19,6 +26,12 @@ public class OAuth2Realm extends AuthorizingRealm {
 
     @Autowired
     private ISysUserService sysUserService;
+
+    @Autowired
+    private ISysRoleService sysRoleService;
+
+    @Autowired
+    private ISysMenuService sysMenuService;
 
 
     /**
@@ -37,8 +50,27 @@ public class OAuth2Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        // TODO 查询用户的权限列表
-        // TODO 把权限列表添加到info对象中
+        // 用户信息
+        SysUserPo user = (SysUserPo) SecurityUtils.getSubject().getPrincipal();
+        // 角色列表
+        Set<String> roles = new HashSet<String>();
+        // 功能列表
+        Set<String> menus = new HashSet<String>();
+        // 管理员拥有所有权限
+        if (user.getRoot().equals("1"))
+        {
+            info.addRole("admin");
+            info.addStringPermission("*:*:*");
+        }else{
+            // 查询用户的角色列表
+            roles = sysRoleService.selectRoleKeys(user.getUserId());
+            // 查询用户的权限列表
+            menus =  sysMenuService.selectPermsByUserId(user.getUserId());
+            // 角色加入AuthorizationInfo认证对象
+            info.setRoles(roles);
+            // 权限加入AuthorizationInfo认证对象
+            info.setStringPermissions(menus);
+        }
         // 返回授权对象
         return info;
     }
@@ -54,6 +86,7 @@ public class OAuth2Realm extends AuthorizingRealm {
         long userId = jwtUtil.getUserId(accessToken);
         //  检测该账户状态
         SysUserPo user = sysUserService.getUserInfo(userId);
+
         if(user.getStatus().equals("0")){
             throw new LockedAccountException("账号已被锁定，请联系管理员");
         }
