@@ -22,6 +22,16 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
         <result column="remark" jdbcType="VARCHAR" property="remark" />
         <result column="root" jdbcType="CHAR" property="root" />
+        <collection  property="roles"   javaType="java.util.List"        resultMap="RoleResult" />
+    </resultMap>
+
+    <resultMap id="RoleResult" type="com.hyperj.system.bean.po.SysRolePo">
+        <id     property="roleId"       column="role_id"        />
+        <result property="roleName"     column="role_name"      />
+        <result property="roleKey"      column="role_key"       />
+        <result property="roleSort"     column="role_sort"      />
+        <result property="dataScope"     column="data_scope"    />
+        <result property="status"       column="role_status"    />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -93,16 +103,22 @@
 		select count(1) from sys_user where user_name=#{userName} limit 1
 	</select>
 
+    <sql id="selectUserVo">
+        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.avatar, u.mobile, u.password, u.gender, u.status, u.removed, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark,u.root,
+        r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.status as role_status
+        from sys_user u
+		    left join sys_user_role ur on u.user_id = ur.user_id
+		    left join sys_role r on r.role_id = ur.role_id
+    </sql>
+
     <select id="getUserInfo" parameterType="Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_user where  user_id = #{userId}
+        <include refid="selectUserVo"/>
+        where u.user_id = #{userId}
     </select>
 
     <select id="getUserByUserName" parameterType="String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from sys_user where  user_name = #{userName}
+        <include refid="selectUserVo"/>
+        where u.user_name = #{userName}
     </select>
 
     <update id="updateUser" parameterType="com.hyperj.system.bean.po.SysUserPo">

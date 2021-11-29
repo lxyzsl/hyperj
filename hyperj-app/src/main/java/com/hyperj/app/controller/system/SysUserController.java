@@ -46,6 +46,7 @@ public class SysUserController extends BaseController {
 
     @ApiOperation("新增用户")
     @PostMapping()
+    @RequiresPermissions("system:user:add")
     @ResponseBody
     public R add(@Validated SysUserAddRequest sysUserAddRequest){
         int result =  sysUserService.insertUser(sysUserAddRequest);
@@ -55,17 +56,19 @@ public class SysUserController extends BaseController {
         return R.success("添加失败");
     }
 
+    @RequiresPermissions("system:user:query")
     @ApiOperation("获取用户详细信息")
     @GetMapping("/{userId}")
     @ResponseBody
     public R getInfo(@PathVariable(value="userId") Long userId){
-        SysUserPo sysUserPo = sysUserService.getUserInfo(userId);
+        SysUserPo sysUserPo = sysUserService.getUserInfo( userId);
         SysUserVo sysUserVo =  sysUserConvert.sysUserVo(sysUserPo);
         return R.success(sysUserVo);
     }
 
     @ApiOperation("修改用户")
     @PutMapping("/{userId}")
+    @RequiresPermissions("system:user:edit")
     @ResponseBody
     public R edit(@PathVariable(value="userId") Long userId,@Validated SysUserEditRequest sysUserEditRequest){
         int result =  sysUserService.updateUser(userId,sysUserEditRequest);
@@ -77,6 +80,7 @@ public class SysUserController extends BaseController {
 
     @ApiOperation("删除用户")
     @DeleteMapping("/{userId}")
+    @RequiresPermissions("system:user:removed")
     @ResponseBody
     public R delete(@PathVariable(value = "userId") Long userId){
         sysUserService.deleteUser(userId);
@@ -86,6 +90,7 @@ public class SysUserController extends BaseController {
 
     @ApiOperation("设置账号状态")
     @PatchMapping("/{userId}/status/{status}")
+    @RequiresPermissions("system:user:edit")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "status", value = "帐号状态（1正常 0停用）", dataType = "String")
     })

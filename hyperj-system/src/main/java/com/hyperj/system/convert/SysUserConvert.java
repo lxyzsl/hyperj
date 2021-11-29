@@ -35,9 +35,5 @@ public interface SysUserConvert {
      */
     SysUserPo sysUserEditRequestToPo(SysUserEditRequest sysUserEditRequest);
 
-    /**
-     * object -> sysUserPo
-     */
-    SysUserPo objectToPo(Object obj);
 
 }

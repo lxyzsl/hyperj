@@ -1,9 +1,11 @@
 package com.hyperj.system.bean.vo;
 
+import com.hyperj.system.bean.po.SysRolePo;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * sys_user
@@ -92,6 +94,11 @@ public class SysUserVo implements Serializable {
      * 备注
      */
     private String remark;
+
+    /**
+     * 角色
+     */
+    private List<SysRolePo> roles;
 
 
     private static final long serialVersionUID = 1L;

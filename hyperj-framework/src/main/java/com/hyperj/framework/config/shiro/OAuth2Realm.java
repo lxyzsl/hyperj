@@ -1,5 +1,6 @@
 package com.hyperj.framework.config.shiro;
 
+import com.hyperj.common.exception.CustomException;
 import com.hyperj.framework.web.utils.JwtUtil;
 import com.hyperj.system.bean.po.SysUserPo;
 import com.hyperj.system.convert.SysUserConvert;
@@ -52,6 +53,9 @@ public class OAuth2Realm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 用户信息
         SysUserPo user = (SysUserPo) SecurityUtils.getSubject().getPrincipal();
+        if(user == null){
+            throw new CustomException("授权失败");
+        }
         // 角色列表
         Set<String> roles = new HashSet<String>();
         // 功能列表

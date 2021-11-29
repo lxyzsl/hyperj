@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public R handleException(GlobalException e, HttpServletRequest request){
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',业务发生异常！原因是：'{}'",requestURI,e.getMessage());
+        log.error("请求地址'{}',业务发生异常！原因是：'{}'",requestURI,e);
         return R.error(HttpStatusEnum.BODY_NOT_MATCH);
     }
 
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public R handleException(Exception e, HttpServletRequest request){
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',系统异常！原因是：'{}'",requestURI,e.getMessage());
+        log.error("请求地址'{}',系统异常！原因是：'{}'",requestURI,e);
         return R.error(e.getMessage());
     }
 
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public R handleException(NullPointerException e,HttpServletRequest request){
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',空指针异常！原因是：'{}'",requestURI,e.getMessage());
+        log.error("请求地址'{}',空指针异常！原因是：'{}'",requestURI,e);
         return R.error(HttpStatusEnum.BODY_NOT_MATCH);
     }
 
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
     public Object handleAuthorizationException(AuthorizationException e, HttpServletRequest request)
     {
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',权限校验失败'{}'", requestURI, e.getMessage());
+        log.error("请求地址'{}',权限校验失败'{}'", requestURI, e);
         return R.error("没有权限");
     }
 

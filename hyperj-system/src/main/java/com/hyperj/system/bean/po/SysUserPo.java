@@ -1,6 +1,7 @@
 package com.hyperj.system.bean.po;
 
 import java.util.Date;
+import java.util.List;
 
 import com.hyperj.common.bean.BasePoBean;
 import lombok.Data;
@@ -90,5 +91,8 @@ public class SysUserPo extends BasePoBean {
      */
     private String root;
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * 角色
+     */
+    private List<SysRolePo> roles;
 }
