@@ -4,7 +4,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
+@Data
 public class ListRequestBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -20,4 +23,17 @@ public class ListRequestBean implements Serializable {
 
     @ApiModelProperty(value="排序规则",name="isAsc",allowableValues="asc,desc")
     private String isAsc;
+
+    /** 其他参数 */
+    @ApiModelProperty(hidden = true)
+    private Map<String, Object> params;
+
+    public Map<String, Object> getParams()
+    {
+        if (params == null)
+        {
+            params = new HashMap<>();
+        }
+        return params;
+    }
 }

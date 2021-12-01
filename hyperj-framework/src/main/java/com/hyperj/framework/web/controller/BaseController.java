@@ -9,7 +9,9 @@ import com.hyperj.common.utils.sql.SqlUtil;
 import com.hyperj.framework.web.page.PageDomain;
 import com.hyperj.framework.web.page.TableDataInfo;
 import com.hyperj.framework.web.page.TableSupport;
+import com.hyperj.system.bean.po.SysUserPo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 
 import java.util.List;
 
@@ -60,5 +62,21 @@ public class BaseController {
                 .setTotal(pageInfoPo.getTotal())
                 .setCurrent(pageInfoPo.getPageNum())
                 .setPageSize(pageInfoPo.getPageSize());
+    }
+
+
+    /**
+     * 获取用户缓存信息
+     */
+    public SysUserPo getLoginUser()
+    {
+        return (SysUserPo)SecurityUtils.getSubject().getPrincipal();
+    }
+    /**
+     * 获取登录用户id
+     */
+    public Long getUserId()
+    {
+        return getLoginUser().getUserId();
     }
 }

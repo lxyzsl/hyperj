@@ -1,6 +1,8 @@
 package com.hyperj.system.service.impl;
 
 import com.hyperj.common.utils.StringUtils;
+import com.hyperj.system.bean.po.SysMenuPo;
+import com.hyperj.system.bean.request.SysMenuListRequest;
 import com.hyperj.system.dao.SysMenuDao;
 import com.hyperj.system.service.ISysMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,4 +39,23 @@ public class SysMenuServiceImpl implements ISysMenuService {
         }
         return permsSet;
     }
+
+
+    @Override
+    public List<SysMenuPo> selectMenuList(SysMenuListRequest menu,Long userId) {
+        List<SysMenuPo> menuList;
+        // 管理员显示所有菜单信息
+        if (userId != null && 1L == userId)
+        {
+            menuList = sysMenuDao.selectMenuList(menu);
+        }
+        else
+        {
+            menu.getParams().put("userId",userId);
+            menuList = sysMenuDao.selectMenuListByUserId(menu);
+        }
+        return menuList;
+    }
+
+
 }

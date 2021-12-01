@@ -61,10 +61,11 @@ public class SysLoginController {
         Long userId =  sysLoginService.validate(loginRequest);
         // 获取token
         String token = jwtUtil.createToken(userId);
-        // TODO 获取用户权限
 
         // 缓存用户token
         RedisStringCache.setCacheObject(token,userId,cacheExpire,TimeUnit.DAYS);
+
+
         return R.success("登录成功").put("token",token);
     }
 
@@ -74,6 +75,7 @@ public class SysLoginController {
         String token = StrUtil.split(authHeader," ")[1];
         long userId = jwtUtil.getUserId(token);
         SysUserPo sysUserPo = sysUserService.getUserInfo(userId);
+
         SysUserVo sysUserVo =  sysUserConvert.sysUserVo(sysUserPo);
         // 角色集合
         Set<String> roles = sysRoleService.selectRoleKeys(sysUserVo.getUserId());

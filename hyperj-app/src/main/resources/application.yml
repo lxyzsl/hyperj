@@ -94,4 +94,4 @@ counter:
   workerId: 0 # 工作机器ID(0~31)
 
 cacheExpire:    # redis缓存有效期（秒）
-  captcha: 36000 # 验证码有效期
+  captcha: 60 # 验证码有效期
