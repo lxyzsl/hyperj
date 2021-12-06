@@ -115,7 +115,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BindException.class)
     public R handleBindException(BindException e)
     {
-        System.out.println("handleBindException");
         String message = e.getAllErrors().get(0).getDefaultMessage();
         log.error("参数校验绑定异常：{}，详细信息：{}",message,e.getMessage());
         return R.error(message);

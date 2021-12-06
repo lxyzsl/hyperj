@@ -98,6 +98,8 @@ public class OAuth2Realm extends AuthorizingRealm {
             throw new LockedAccountException("账号已被删除，请联系管理员");
         }
         // 往info对象中添加用户信息，token，当前Realm类的名字
+        System.out.println("doGetAuthenticationInfo");
+        System.out.println(user);
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user,accessToken,getName());
         return info;
 

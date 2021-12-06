@@ -48,7 +48,7 @@ public class SysUserController extends BaseController {
     @PostMapping()
     @RequiresPermissions("system:user:add")
     @ResponseBody
-    public R add(@Validated SysUserAddRequest sysUserAddRequest){
+    public R add(@RequestBody @Validated SysUserAddRequest sysUserAddRequest){
         int result =  sysUserService.insertUser(sysUserAddRequest);
         if(result > 0){
             return R.success("添加成功");
@@ -70,7 +70,7 @@ public class SysUserController extends BaseController {
     @PutMapping("/{userId}")
     @RequiresPermissions("system:user:edit")
     @ResponseBody
-    public R edit(@PathVariable(value="userId") Long userId,@Validated SysUserEditRequest sysUserEditRequest){
+    public R edit(@PathVariable(value="userId") Long userId,@RequestBody @Validated SysUserEditRequest sysUserEditRequest){
         int result =  sysUserService.updateUser(userId,sysUserEditRequest);
         if(result > 0){
             return R.success("修改成功");

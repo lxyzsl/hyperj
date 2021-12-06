@@ -28,7 +28,7 @@ public class SysMenuController extends BaseController {
      * 获取菜单列表
      */
     @RequiresPermissions("system:menu:list")
-    @ApiOperation("获取用户详细信息")
+    @ApiOperation("获取菜单列表")
     @ResponseBody
     @GetMapping("/list")
     public R list(SysMenuListRequest menu)

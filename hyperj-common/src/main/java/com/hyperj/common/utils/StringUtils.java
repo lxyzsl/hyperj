@@ -1,5 +1,6 @@
 package com.hyperj.common.utils;
 
+import com.hyperj.common.constant.Constants;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;
@@ -165,6 +166,17 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return matcher.match(pattern, url);
     }
 
+
+    /**
+     * 是否为http(s)://开头
+     *
+     * @param link 链接
+     * @return 结果
+     */
+    public static boolean ishttp(String link)
+    {
+        return StringUtils.startsWithAny(link, Constants.HTTP, Constants.HTTPS);
+    }
 
 
 }

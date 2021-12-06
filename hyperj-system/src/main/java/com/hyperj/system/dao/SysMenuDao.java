@@ -29,5 +29,21 @@ public interface SysMenuDao {
      *
      * @return 菜单列表
      */
-    public List<SysMenuPo> selectMenuListByUserId(SysMenuListRequest menu);
+    List<SysMenuPo> selectMenuListByUserId(SysMenuListRequest menu);
+
+    /**
+     * 获取所有的菜单
+     *
+     * @return 菜单列表
+     */
+    List<SysMenuPo> selectMenuTreeAll();
+
+    /**
+     * 根据用户ID查询菜单
+     *
+     * @param userId 用户ID
+     * @return 菜单列表
+     */
+    public List<SysMenuPo> selectMenuTreeByUserId(Long userId);
+
 }

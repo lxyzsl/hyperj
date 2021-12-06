@@ -5,8 +5,10 @@ import com.hyperj.common.utils.redis.RedisStringCache;
 import com.hyperj.framework.config.shiro.OAuth2Token;
 import com.hyperj.framework.web.utils.JwtUtil;
 import com.hyperj.framework.web.utils.R;
+import com.hyperj.system.bean.po.SysMenuPo;
 import com.hyperj.system.bean.po.SysUserPo;
 import com.hyperj.system.bean.request.SysLoginRequest;
+import com.hyperj.system.bean.vo.RouterVo;
 import com.hyperj.system.bean.vo.SysUserVo;
 import com.hyperj.system.convert.SysUserConvert;
 import com.hyperj.system.service.ISysMenuService;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -57,7 +60,7 @@ public class SysLoginController {
 
     @PostMapping("/login")
     @ApiOperation("登录")
-    public R login(@Validated SysLoginRequest loginRequest){
+    public R login(@RequestBody @Validated SysLoginRequest loginRequest){
         try {
             // 验证用户信息
             Long userId =  sysLoginService.validate(loginRequest);
@@ -76,6 +79,7 @@ public class SysLoginController {
     @GetMapping("/getUserInfo")
     @ApiOperation("获取用户信息")
     public R getUserInfo(@RequestHeader("Authorization") String authHeader){
+
         String token = StrUtil.split(authHeader," ")[1];
         long userId = jwtUtil.getUserId(token);
         SysUserPo sysUserPo = sysUserService.getUserInfo(userId);
@@ -84,7 +88,7 @@ public class SysLoginController {
         // 角色集合
         Set<String> roles = sysRoleService.selectRoleKeys(sysUserVo.getUserId());
         // 权限集合
-        Set<String> permissions = sysMenuService.selectPermsByUserId(userId);
+        Set<String> permissions = sysMenuService.selectPermsByUserId(sysUserVo.getUserId());
         return R.success().put("user",sysUserVo).put("roles",roles).put("permissions",permissions);
     }
 
@@ -105,6 +109,17 @@ public class SysLoginController {
         return R.success();
     }
 
+
+    @GetMapping("getRouters")
+    @ApiOperation("获取路由信息")
+    public R getRouters(@RequestHeader("Authorization") String authHeader){
+        String token = StrUtil.split(authHeader," ")[1];
+        long userId = jwtUtil.getUserId(token);
+        SysUserPo sysUserPo = sysUserService.getUserInfo(userId);
+        List<SysMenuPo> menus = sysMenuService.selectMenuTreeByUserId(sysUserPo);
+        List<RouterVo> routers = sysMenuService.buildMenus(menus);
+        return R.success(routers);
+    }
 
 
 }
