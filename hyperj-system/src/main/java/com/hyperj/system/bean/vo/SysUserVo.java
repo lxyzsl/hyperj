@@ -96,6 +96,11 @@ public class SysUserVo implements Serializable {
     private String remark;
 
     /**
+     * 是否是超级管理员
+     */
+    private String root;
+
+    /**
      * 角色
      */
     private List<SysRolePo> roles;
