@@ -1,0 +1,4 @@
+Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems.
+The Spring Cloud course demonstrates common architecture challenges you will encounter while building RESTful
+microservices,and how you can address them using Spring Cloud solutions such as Service Registry, Client Load
+Balancing, Retry/Backoff, Circuit Breaker, Load Shedding, External Configuration and Telemetry.

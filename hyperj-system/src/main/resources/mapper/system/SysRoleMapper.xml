@@ -8,7 +8,7 @@
         <result property="roleSort"     column="role_sort"      />
         <result property="dataScope"    column="data_scope"     />
         <result property="status"       column="status"         />
-        <result property="removed"      column="del_flag"       />
+        <result property="removed"      column="removed"       />
         <result property="createBy"     column="create_by"      />
         <result property="createTime"   column="create_time"    />
         <result property="updateBy"     column="update_by"      />
@@ -39,4 +39,29 @@
         <include refid="selectRoleVo"/>
         where r.removed = '0' and r.role_id = #{roleId}
     </select>
+
+    <select id="selectRoleList" parameterType="com.hyperj.system.bean.po.SysRolePo" resultMap="SysRoleResult">
+        <include refid="selectRoleVo"/>
+        where r.removed = '0'
+        <if test="roleName != null and roleName != ''">
+            AND r.role_name like concat('%', #{roleName}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            AND r.status = #{status}
+        </if>
+        <if test="roleKey != null and roleKey != ''">
+            AND r.role_key like concat('%', #{roleKey}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(r.create_time,'%y%m%d') &gt;= date_format(#{createdStartTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(r.create_time,'%y%m%d') &lt;= date_format(#{createdEndTime},'%y%m%d')
+        </if>
+        <!-- 数据范围过滤 -->
+--         ${params.dataScope}
+        order by r.role_sort
+    </select>
+
+
 </mapper>

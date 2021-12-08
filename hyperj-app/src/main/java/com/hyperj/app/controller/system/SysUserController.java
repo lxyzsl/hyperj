@@ -80,7 +80,7 @@ public class SysUserController extends BaseController {
 
     @ApiOperation("删除用户")
     @DeleteMapping("/{userId}")
-    @RequiresPermissions("system:user:removed")
+    @RequiresPermissions("system:user:remove")
     @ResponseBody
     public R delete(@PathVariable(value = "userId") Long userId){
         sysUserService.deleteUser(userId);

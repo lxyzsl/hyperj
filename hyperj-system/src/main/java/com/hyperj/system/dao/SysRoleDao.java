@@ -1,6 +1,7 @@
 package com.hyperj.system.dao;
 
 import com.hyperj.system.bean.po.SysRolePo;
+import com.hyperj.system.bean.request.SysRoleListRequest;
 
 import java.util.List;
 
@@ -20,6 +21,13 @@ public interface SysRoleDao {
      * @param roleId 角色ID
      * @return 角色对象信息
      */
-    public SysRolePo selectRoleById(Long roleId);
+    SysRolePo selectRoleById(Long roleId);
+
+    /**
+     * 获取角色列表
+     * @return
+     */
+    List<SysRolePo> selectRoleList(SysRoleListRequest sysRoleListRequest);
+
 
 }

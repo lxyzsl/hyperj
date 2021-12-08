@@ -2,6 +2,7 @@ package com.hyperj.system.service.impl;
 
 import com.hyperj.common.utils.StringUtils;
 import com.hyperj.system.bean.po.SysRolePo;
+import com.hyperj.system.bean.request.SysRoleListRequest;
 import com.hyperj.system.dao.SysRoleDao;
 import com.hyperj.system.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +39,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
         }
         return permsSet;
     }
+
+    /**
+     * 获取角色列表
+     */
+    @Override
+    public List<SysRolePo> selectRoleList(SysRoleListRequest sysRoleListRequest) {
+        return sysRoleDao.selectRoleList(sysRoleListRequest);
+    }
+
+
 }
